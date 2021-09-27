@@ -59,6 +59,37 @@ func (s *CommitsService) ListCommits(pid interface{}, opts *ListCommitsOptions) 
 	return c, resp, err
 }
 
+type CommitRef struct {
+	Type string `json:"type"`
+	Name string `json:"name"`
+}
+
+type GetCommitRefsOptions struct {
+	ListOptions
+	Type *string `url:"type,omitempty" json:"type,omitempty"`
+}
+
+func (s *CommitsService) ListCommitRefs(pid interface{}, sha string, opts *GetCommitRefsOptions) ([]*CommitRef, *Response, error) {
+	project, err := parseID(pid)
+	if err != nil {
+		return nil, nil, err
+	}
+	u := fmt.Sprintf("projects/%s/repository/commits/%s/refs", pathEscape(project), pathEscape(sha))
+
+	req, err := s.client.NewRequest(http.MethodGet, u, opts)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var cs []*CommitRef
+	resp, err := s.client.Do(req, &cs)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return cs, resp, err
+}
+
 func (s *CommitsService) GetCommit(pid interface{}, sha string) (*Commit, *Response, error) {
 	project, err := parseID(pid)
 	if err != nil {
