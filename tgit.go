@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/google/go-querystring/query"
 	"github.com/hashicorp/go-retryablehttp"
@@ -19,6 +20,10 @@ const (
 	defaultBaseURL = "https://git.code.tencent.com/"
 	apiVersionPath = "api/v3/"
 	userAgent      = "go-tgit"
+)
+
+var (
+	chinaLoc = time.FixedZone("Asia/Shanghai", int((8 * time.Hour).Seconds()))
 )
 
 type authType int
@@ -347,4 +352,17 @@ func parseError(raw interface{}) string {
 	default:
 		return fmt.Sprintf("failed to parse unexpected error type: %T", raw)
 	}
+}
+
+type Time struct {
+	time.Time
+}
+
+func (t *Time) UnmarshalJSON(b []byte) (err error) {
+	t.Time, err = time.ParseInLocation("2006-01-02T15:04:05+0000", strings.Trim(string(b), "\""), chinaLoc)
+	return
+}
+
+func (t *Time) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("\"%s\"", t.Time.Format(time.RFC3339))), nil
 }
