@@ -358,11 +358,25 @@ type Time struct {
 	time.Time
 }
 
-func (t *Time) UnmarshalJSON(b []byte) (err error) {
-	t.Time, err = time.ParseInLocation("2006-01-02T15:04:05+0000", strings.Trim(string(b), "\""), chinaLoc)
-	return
+func (t *Time) AsTime() *time.Time {
+	if t == nil {
+		return nil
+	}
+	date := time.Date(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), t.Location())
+	return &date
+}
+
+func (t *Time) UnmarshalJSON(data []byte) (err error) {
+	s := string(data)
+	if s == "null" {
+		return nil
+	}
+
+	s = strings.ReplaceAll(s, "+0000", "+08:00")
+	t.Time, err = time.Parse(`"`+time.RFC3339+`"`, s)
+	return err
 }
 
 func (t *Time) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("\"%s\"", t.Time.Format(time.RFC3339))), nil
+	return t.Time.MarshalJSON()
 }
