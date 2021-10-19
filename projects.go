@@ -47,13 +47,13 @@ type ListProjectsOptions struct {
 }
 
 type ProjectNamespace struct {
-	CreatedAt   string `json:"created_at"`
-	Description string `json:"description"`
-	ID          int    `json:"id"`
-	Name        string `json:"name"`
-	OwnerID     int    `json:"owner_id"`
-	Path        string `json:"path"`
-	UpdatedAt   string `json:"updated_at"`
+	CreatedAt   *time.Time `json:"created_at"`
+	Description string     `json:"description"`
+	ID          int        `json:"id"`
+	Name        string     `json:"name"`
+	OwnerID     int        `json:"owner_id"`
+	Path        string     `json:"path"`
+	UpdatedAt   *time.Time `json:"updated_at"`
 }
 
 type User struct {
