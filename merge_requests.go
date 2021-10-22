@@ -16,8 +16,8 @@ type ListMergeRequestsOptions struct {
 	State   string `url:"state,omitempty" json:"state,omitempty"`
 	OrderBy string `url:"order_by,omitempty" json:"order_by,omitempty"`
 	Sort    string `url:"sort,omitempty" json:"sort,omitempty"`
-
-	ListOptions
+	Page    int    `url:"page,omitempty" json:"page,omitempty"`
+	PerPage int    `url:"per_page,omitempty" json:"per_page,omitempty"`
 }
 
 type MergeRequestUser struct {
@@ -125,8 +125,35 @@ type DiffFile struct {
 }
 
 type MergeRequestChange struct {
-	MergeRequest
-	Files []*DiffFile `json:"files"`
+	Labels              []string              `json:"labels"`
+	ID                  int                   `json:"id"`
+	Title               string                `json:"title"`
+	TargetProjectID     int                   `json:"target_project_id"`
+	TargetBranch        string                `json:"target_branch"`
+	SourceProjectID     int                   `json:"source_project_id"`
+	SourceBranch        string                `json:"source_branch"`
+	State               string                `json:"state"`
+	MergeStatus         string                `json:"merge_status"`
+	Iid                 int                   `json:"iid"`
+	Description         string                `json:"description"`
+	CreatedAt           string                `json:"created_at"`
+	UpdatedAt           string                `json:"updated_at"`
+	ResolvedAt          *time.Time            `json:"resolved_at"`
+	MergeType           string                `json:"merge_type"`
+	Assignee            *MergeRequestUser     `json:"assignee"`
+	Author              *MergeRequestUser     `json:"author"`
+	MergeCommitSha      string                `json:"merge_commit_sha"`
+	Milestone           *Milestone            `json:"milestone"`
+	NecessaryReviewers  []*MergeRequestViewer `json:"necessary_reviewers"`
+	SuggestionReviewers []*MergeRequestViewer `json:"suggestion_reviewers"`
+	BaseCommit          string                `json:"base_commit"`
+	TargetCommit        string                `json:"target_commit"`
+	SourceCommit        string                `json:"source_commit"`
+	ProjectID           int                   `json:"project_id"`
+	WorkInProgress      bool                  `json:"work_in_progress"`
+	Upvotes             int                   `json:"upvotes"`
+	Downvotes           int                   `json:"downvotes"`
+	Files               []*DiffFile           `json:"files"`
 }
 
 // ListMergeRequestChange https://code.tencent.com/help/api/mergeRequest#searchMergeRequest
