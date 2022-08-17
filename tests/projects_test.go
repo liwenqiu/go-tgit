@@ -1,4 +1,4 @@
-package tgit
+package tests
 
 import (
 	"fmt"

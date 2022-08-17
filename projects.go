@@ -55,15 +55,6 @@ type ProjectNamespace struct {
 	UpdatedAt   *Time  `json:"updated_at"`
 }
 
-type User struct {
-	ID        int    `json:"id"`
-	Username  string `json:"username"`
-	WebURL    string `json:"web_url"`
-	Name      string `json:"name"`
-	State     string `json:"state"`
-	AvatarURL string `json:"avatar_url"`
-}
-
 type ProjectConfigStorage struct {
 	LimitLfsFileSize float64 `json:"limit_lfs_file_size"`
 	LimitSize        float64 `json:"limit_size"`
