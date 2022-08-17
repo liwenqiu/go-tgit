@@ -23,7 +23,7 @@ const (
 )
 
 var (
-	chinaLoc = time.FixedZone("Asia/Shanghai", int((8 * time.Hour).Seconds()))
+	ChinaLoc = time.FixedZone("Asia/Shanghai", int((8 * time.Hour).Seconds()))
 )
 
 type authType int
@@ -254,6 +254,7 @@ func (c *Client) Do(req *retryablehttp.Request, v interface{}) (*Response, error
 	case oAuthToken:
 		req.Header.Set("OAUTH-TOKEN", c.token)
 	case privateToken:
+		// https://code.tencent.com/help/api/prepare#authentication
 		req.Header.Set("PRIVATE-TOKEN", c.token)
 	}
 
@@ -372,7 +373,7 @@ func (t *Time) AsTime() *time.Time {
 
 func (t *Time) UnmarshalJSON(data []byte) (err error) {
 	s := string(data)
-	if s == "null" {
+	if s == "null" || s == `""` {
 		return nil
 	}
 

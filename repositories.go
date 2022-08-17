@@ -11,7 +11,7 @@ type RepositoriesService struct {
 
 type Diff struct {
 	OldPath     string `json:"old_path,omitempty"`
-	NewPath     string `json:"new_file,omitempty"`
+	NewPath     string `json:"new_path,omitempty"`
 	AMode       int    `json:"a_mode,omitempty"`
 	BMode       int    `json:"b_mode,omitempty"`
 	Diff        string `json:"diff,omitempty"`

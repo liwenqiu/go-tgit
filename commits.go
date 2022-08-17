@@ -32,7 +32,7 @@ func (c Commit) String() string {
 
 type ListCommitsOptions struct {
 	ListOptions
-	RefName *string    `json:"ref_name,omitempty" json:"ref_name,omitempty"`
+	RefName *string    `json:"ref_name,omitempty"`
 	Since   *time.Time `url:"since,omitempty" json:"since,omitempty"`
 	Until   *time.Time `url:"until,omitempty" json:"until,omitempty"`
 	Path    *string    `url:"path,omitempty" json:"path,omitempty"`

@@ -25,7 +25,7 @@ func (r File) String() string {
 }
 
 type GetFileOptions struct {
-	Ref      *string `url:"ref,omitempty""`
+	Ref      *string `url:"ref,omitempty"`
 	FilePath *string `url:"file_path"`
 }
 
