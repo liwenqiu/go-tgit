@@ -60,6 +60,7 @@ type Client struct {
 	Tags            *TagsService
 	Projects        *ProjectsService
 	MergeRequests   *MergeRequestsService
+	Users           *UsersService
 }
 
 type ListOptions struct {
@@ -116,6 +117,7 @@ func newClient(hc *retryablehttp.Client) (*Client, error) {
 	c.Tags = &TagsService{client: c}
 	c.Projects = &ProjectsService{client: c}
 	c.MergeRequests = &MergeRequestsService{client: c}
+	c.Users = &UsersService{client: c}
 
 	return c, nil
 }
