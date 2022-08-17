@@ -2,7 +2,6 @@ package tgit
 
 import (
 	"net/http"
-	"time"
 )
 
 type ProjectsService struct {
@@ -47,13 +46,13 @@ type ListProjectsOptions struct {
 }
 
 type ProjectNamespace struct {
-	CreatedAt   *time.Time `json:"created_at"`
-	Description string     `json:"description"`
-	ID          int        `json:"id"`
-	Name        string     `json:"name"`
-	OwnerID     int        `json:"owner_id"`
-	Path        string     `json:"path"`
-	UpdatedAt   *time.Time `json:"updated_at"`
+	CreatedAt   *Time  `json:"created_at"`
+	Description string `json:"description"`
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	OwnerID     int    `json:"owner_id"`
+	Path        string `json:"path"`
+	UpdatedAt   *Time  `json:"updated_at"`
 }
 
 type User struct {
@@ -115,8 +114,8 @@ type ProjectItem struct {
 	TagNameRegex              string                `json:"tag_name_regex"`
 	TagCreatePushLevel        int                   `json:"tag_create_push_level"`
 	BranchNameRegex           string                `json:"branch_name_regex"`
-	CreatedAt                 *time.Time            `json:"created_at"`
-	LastActivityAt            *time.Time            `json:"last_activity_at"`
+	CreatedAt                 *Time                 `json:"created_at"`
+	LastActivityAt            *Time                 `json:"last_activity_at"`
 	CreatorID                 int                   `json:"creator_id"`
 	AvatarURL                 string                `json:"avatar_url"`
 	WatchsCount               int                   `json:"watchs_count"`
@@ -148,7 +147,7 @@ func (s *ProjectsService) ListProjects(opts *ListProjectsOptions) ([]*ProjectIte
 	}
 
 	var p []*ProjectItem
-	resp, err := s.client.Do(req, p)
+	resp, err := s.client.Do(req, &p)
 	if err != nil {
 		return nil, resp, err
 	}
