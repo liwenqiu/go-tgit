@@ -106,7 +106,7 @@ func (s *MergeRequestsService) ListMergeRequests(opts *ListMergeRequestsOptions)
 
 type ListMergeRequestChangeOptions struct {
 	Id             string
-	MergeRequestId int
+	MergeRequestId int64
 }
 
 type DiffFile struct {
@@ -149,7 +149,7 @@ type MergeRequestChange struct {
 	BaseCommit          string                `json:"base_commit"`
 	TargetCommit        string                `json:"target_commit"`
 	SourceCommit        string                `json:"source_commit"`
-	ProjectID           inint64t              `json:"project_id"`
+	ProjectID           int64                 `json:"project_id"`
 	WorkInProgress      bool                  `json:"work_in_progress"`
 	Upvotes             int                   `json:"upvotes"`
 	Downvotes           int                   `json:"downvotes"`
