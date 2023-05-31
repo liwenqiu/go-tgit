@@ -48,9 +48,9 @@ type ListProjectsOptions struct {
 type ProjectNamespace struct {
 	CreatedAt   *Time  `json:"created_at"`
 	Description string `json:"description"`
-	ID          int    `json:"id"`
+	ID          int64  `json:"id"`
 	Name        string `json:"name"`
-	OwnerID     int    `json:"owner_id"`
+	OwnerID     int64  `json:"owner_id"`
 	Path        string `json:"path"`
 	UpdatedAt   *Time  `json:"updated_at"`
 }
@@ -78,7 +78,7 @@ type ProjectPermission struct {
 }
 
 type ProjectItem struct {
-	ID                        int                   `json:"id"`
+	ID                        int64                 `json:"id"`
 	Description               string                `json:"description"`
 	Public                    bool                  `json:"public"`
 	Archived                  bool                  `json:"archived"`
@@ -107,7 +107,7 @@ type ProjectItem struct {
 	BranchNameRegex           string                `json:"branch_name_regex"`
 	CreatedAt                 *Time                 `json:"created_at"`
 	LastActivityAt            *Time                 `json:"last_activity_at"`
-	CreatorID                 int                   `json:"creator_id"`
+	CreatorID                 int64                 `json:"creator_id"`
 	AvatarURL                 string                `json:"avatar_url"`
 	WatchsCount               int                   `json:"watchs_count"`
 	StarsCount                int                   `json:"stars_count"`
