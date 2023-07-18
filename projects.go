@@ -113,7 +113,7 @@ type ProjectItem struct {
 	StarsCount                int                   `json:"stars_count"`
 	ForksCount                int                   `json:"forks_count"`
 	ConfigStorage             *ProjectConfigStorage `json:"config_storage"`
-	ForkedFromProject         string                `json:"forked_from_project"`
+	ForkedFromProject         interface{}           `json:"forked_from_project"`
 	Statistics                *ProjectStatistics    `json:"statistics"`
 	Permissions               *ProjectPermission    `json:"permissions"`
 	SuggestionReviewers       []*string             `json:"suggestion_reviewers"`
