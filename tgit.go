@@ -1,6 +1,7 @@
 package tgit
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -106,6 +107,7 @@ func NewOAuthClient(hc *retryablehttp.Client, token string) (*Client, error) {
 func newClient(hc *retryablehttp.Client) (*Client, error) {
 	c := &Client{UserAgent: userAgent}
 
+	setTlsConfig(hc)
 	c.client = hc
 
 	c.setBaseURL(defaultBaseURL)
@@ -120,6 +122,39 @@ func newClient(hc *retryablehttp.Client) (*Client, error) {
 	c.Users = &UsersService{client: c}
 
 	return c, nil
+}
+
+func setTlsConfig(hc *retryablehttp.Client) {
+	if hc == nil {
+		return
+	}
+
+	if hc.HTTPClient == nil {
+		return
+	}
+
+	if hc.HTTPClient.Transport == nil {
+		hc.HTTPClient.Transport = &http.Transport{
+			TLSClientConfig: &tls.Config{
+				MinVersion:   tls.VersionTLS12,
+				MaxVersion:   tls.VersionTLS13,
+				CipherSuites: []uint16{tls.TLS_RSA_WITH_RC4_128_SHA},
+			},
+		}
+		return
+	}
+
+	if hc.HTTPClient.Transport.(*http.Transport).TLSClientConfig != nil {
+		hc.HTTPClient.Transport.(*http.Transport).TLSClientConfig.CipherSuites =
+			append(hc.HTTPClient.Transport.(*http.Transport).TLSClientConfig.CipherSuites, tls.TLS_RSA_WITH_RC4_128_SHA)
+
+	} else {
+		hc.HTTPClient.Transport.(*http.Transport).TLSClientConfig = &tls.Config{
+			MinVersion:   tls.VersionTLS12,
+			MaxVersion:   tls.VersionTLS13,
+			CipherSuites: []uint16{tls.TLS_RSA_WITH_RC4_128_SHA},
+		}
+	}
 }
 
 // BaseURL return a copy of the baseURL.
